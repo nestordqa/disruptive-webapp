@@ -148,6 +148,7 @@ export const deleteContent = async (jwt, id) => {
                 'Authorization': `Bearer ${jwt}`
             }
         });
+        console.log(request);
         if (request && request.status === 204) {
             const result = await request.json();
             return result;

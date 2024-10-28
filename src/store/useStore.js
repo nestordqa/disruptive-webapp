@@ -26,6 +26,7 @@ export const useStore = create((set) => ({
         set({ loading: true });
         try {
             const result = await postContent(jwt, newData);
+            console.log(result);
             set((state) => ({ contentData: [...state.contentData, result], loading: false }));
             Swal.fire(
                 '¡Excelente!',
@@ -46,7 +47,7 @@ export const useStore = create((set) => ({
         try {
             await deleteContent(jwt, id);
             const getCats = await getContent(jwt);
-            set((state) => ({ contentData: [getCats], loading: false }));
+            set((state) => ({ contentData: [...getCats], loading: false }));
             Swal.fire(
                 '¡Excelente!',
                 'Contenido eliminado con éxito',

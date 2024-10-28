@@ -1,6 +1,10 @@
 import React, { useEffect } from 'react'
 import useStore from '../../store/useStore';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Routes, Route } from 'react-router-dom';
+import '../../styles/dashboard.css';
+import { Navbar } from '../common/Navbar';
+import { Content } from './dashboard-components/Content';
+import { Categories } from './dashboard-components/Categories';
 
 export const Dashboard = () => {
     const { jwt } = useStore();
@@ -11,7 +15,15 @@ export const Dashboard = () => {
         }
         //eslint-disable-next-line
     }, [])
-  return (
-    <div>Dashboard</div>
-  )
+    return (
+        <div className='dashboard-container'>
+            <Navbar />
+            <div className="info-conainer">
+                <Routes>
+                    <Route path="categories" element={<Categories />} />
+                    <Route path="content" element={<Content />} />
+                </Routes>
+            </div>
+        </div>
+    )
 }

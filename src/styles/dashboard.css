@@ -1,0 +1,23 @@
+.dashboard-container {
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-direction: column;
+    background-color: #4a4a4ab2;
+}
+
+.navbar {
+    height: 7.5%;
+}
+
+.info-conainer {
+    height: 92.5%;
+    /* background-color: aqua; */
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
