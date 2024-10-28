@@ -20,12 +20,31 @@ const style = {
 
 export const CreateContent = () => {
     const { postContentData, categoriesData, jwt } = useStore();
+    const categorias = [
+        {
+            name: 'Videos',
+            value: 'video'
+        },
+        {
+            name: 'Imagenes',
+            value: 'image'
+        },
+        {
+            name: 'texts',
+            value: 'text'
+        }
+    ];
+    const [catRender, setCatRender] = useState([]);
     const [userRole, setUserRole] = useState(null);
     const [userId, setUserId] = useState(null); 
     const [open, setOpen] = useState(false);
     const [categories, setCategories] = useState([]);
     const [categoryId, setCategoryId] = useState(null);
-    const { register, control, handleSubmit, formState: { errors } } = useForm();
+    const { register, control, handleSubmit, formState: { errors } } = useForm({
+        defaultValues: {
+            category: null
+        }
+    });
 
     const handleOpen = () => {
         if (!categoriesData?.length) {
@@ -48,15 +67,34 @@ export const CreateContent = () => {
             category: categoryId,
             user: userId
         };
-        console.log(obj);
         await postContentData(jwt, obj);
         // Here you can handle the form submission, e.g., call postContentData
         handleClose();
     };
 
     const handleSelect = (e) => {
-        let filter = categories.filter((item, index) => index === e.target.value);
+        if (!e) return;
+        let filter = categories.filter((item) => item._id === e.target.value);
         filter = filter[0];
+        //eslint-disable-next-line
+        const newCats = categorias.filter((item) => {
+            if (item.value === 'video') {
+                if (filter.permissions.videos) {
+                    return item;
+                }
+            }
+            if (item.value === 'image') {
+                if (filter.permissions.images) {
+                    return item;
+                }
+            }
+            if (item.value === 'text') {
+                if (filter.permissions.texts) {
+                    return item;
+                }
+            }
+        });
+        setCatRender(newCats);
         setCategoryId(filter._id);
     }
 
@@ -103,13 +141,21 @@ export const CreateContent = () => {
                             helperText={errors.url ? 'Este campo es requerido' : ''}
                         />
                         <FormControl fullWidth margin="normal">
-                            <InputLabel id="category-label">Categoría</InputLabel>
-                            <Select label='Categorias...'>
-                                {categories && categories.length > 0 && categories.map((category) => (
-                                    <MenuItem key={category._id} value={category._id} onClick={handleSelect}>                                                {category.name}
-                                    </MenuItem>
-                                ))}
-                            </Select>
+                                    
+                                <select onChange={handleSelect}
+                                    style={{
+                                        height: '55px',
+                                        padding: '10px',
+                                        border: 'solid 1px #B2B2B2',
+                                        borderRadius: '0.2em'
+                                    }}
+                                >
+                                    {categories && categories.length > 0 && categories.map((category) => (
+                                        <option key={category._id} value={category._id}>
+                                            {category.name}
+                                        </option>
+                                    ))}
+                                </select>
                         </FormControl>
                         <FormControl fullWidth margin="normal">
                             <InputLabel id="type-label">Tipo</InputLabel>
@@ -124,9 +170,9 @@ export const CreateContent = () => {
                                         {...field}
                                         error={!!errors.type}
                                     >
-                                        <MenuItem value="image">Imagen</MenuItem>
-                                        <MenuItem value="video">Video</MenuItem>
-                                        <MenuItem value="text">Texto</MenuItem>
+                                        {
+                                            catRender && catRender.map((item, index) => <MenuItem key={index} value={item.value} >{item.name}</MenuItem>)
+                                        }
                                     </Select>
                                 )}
                             />

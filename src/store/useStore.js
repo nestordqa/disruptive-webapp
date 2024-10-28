@@ -26,7 +26,6 @@ export const useStore = create((set) => ({
         set({ loading: true });
         try {
             const result = await postContent(jwt, newData);
-            console.log(result);
             set((state) => ({ contentData: [...state.contentData, result], loading: false }));
             Swal.fire(
                 '¡Excelente!',
@@ -84,14 +83,18 @@ export const useStore = create((set) => ({
         set({ loadingCategories: true });
         try {
             const result = await postCategory(jwt, newData);
-            set((state) => ({ categoriesData: [...state.categoriesData, result], loadingCategories: false }));
-            Swal.fire(
-                '¡Excelente!',
-                'Categoría creada con éxito',
-                'success'
-            )
-            .then(() => {})
-            .catch(() => {});
+            if (result) {
+                set((state) => ({ categoriesData: [...state.categoriesData, result], loadingCategories: false }));
+                Swal.fire(
+                    '¡Excelente!',
+                    'Categoría creada con éxito',
+                    'success'
+                )
+                .then(() => {})
+                .catch(() => {});
+            } else {
+                set((state) => ({ loadingCategories: false }));
+            }
         } catch (error) {
             Swal.fire(
                 'Ups!',
@@ -108,7 +111,7 @@ export const useStore = create((set) => ({
         try {
             await deleteCategory(jwt, id);
             const getCats = await getCategories(jwt);
-            set((state) => ({ categoriesData: [getCats], loadingCategories: false }));
+            set((state) => ({ categoriesData: [...getCats], loadingCategories: false }));
             Swal.fire(
                 '¡Excelente!',
                 'Categoría eliminada con éxito',
@@ -127,6 +130,34 @@ export const useStore = create((set) => ({
             set({ error: error.message, loadingCategories: false });
         }
     },
+
+    filtering: false,
+
+    filteredContentData: [],
+    // Filtrar contenido
+    filterContentData: (searchTerm) => {
+        set((state) => ({
+            filteredContentData: state.contentData.filter(item => 
+                item.title.toLowerCase().includes(searchTerm.toLowerCase())
+            ),
+        }));
+    },
+
+    filteredCategoriesData: [],
+    //filtrar categorias
+    filterCategoriesData: (searchTerm) => {
+        set((state) => ({
+            filteredCategoriesData: state.categoriesData.filter(item => {
+                return item.name.toLowerCase().includes(searchTerm.toLowerCase())
+            }),
+        }));
+    },
+
+    setFiltering: (filter) => {
+        set((state) => ({
+            filtering: filter
+        }))
+    }
 }));
 
 export default useStore;

@@ -5,69 +5,71 @@ import '../../../../styles/content.css';
 import Swal from 'sweetalert2';
 import { getRoleFromJWT } from '../../../../utils/common';
 
-export const ContentTable = () => {
+export const CategoryTable = () => {
     const [userRole, setUserRole] = useState(null);
     const { 
-        contentData: initialContents,
-        deleteContentData,
+        categoriesData: initialCategories,
+        deleteCategoriesData,
         jwt,
         filtering,
-        filteredContentData
+        filteredCategoriesData
     } = useStore();
     //eslint-disable-next-line
-    const [contents, setContents] = useState(initialContents);
+    const [contents, setContents] = useState(initialCategories);
 
     const handleDelete =  (id) => {
         Swal.fire({
             title: '¿Estás seguro?',
-            text: "Estás apunto de eliminar un contenido",
+            text: "Estás apunto de eliminar una categoría",
             icon: 'warning',
             showCancelButton: true,
             confirmButtonText: 'Sí',
             cancelButtonText: 'Cancelar'
         })
-        .then(async(result) => {
+        .then(async (result) => {
             if (result.isConfirmed) {
-                await deleteContentData(jwt, id);
+                await deleteCategoriesData(jwt, id);
             }
         })
         .catch((e) => console.error(e));
 
     }
 
+    const handlePermissions = (permission) => {
+        return permission ? 'Si' : 'No';
+    }
+
     //eslint-disable-next-line
     useEffect(() => {
         setUserRole(getRoleFromJWT(jwt));
         if (filtering) {
-            setContents(filteredContentData)
+            setContents(filteredCategoriesData)
         } else {
-            setContents(initialContents);
+            setContents(initialCategories);
         }
         //eslint-disable-next-line
-    }, [filtering, filteredContentData])
+    }, [filtering, filteredCategoriesData])
 
     return (
         <TableContainer component={Paper} className='table-container'>
             <Table>
                 <TableHead>
                 <TableRow>
-                    <TableCell><strong>Título</strong></TableCell>
-                    <TableCell><strong>Categoría</strong></TableCell>
-                    <TableCell><strong>Usuario</strong></TableCell>
-                    <TableCell><strong>Tipo</strong></TableCell>
-                    <TableCell><strong>URL</strong></TableCell>
+                    <TableCell><strong>Nombre</strong></TableCell>
+                    <TableCell><strong>Permite imagenes</strong></TableCell>
+                    <TableCell><strong>Permite videos</strong></TableCell>
+                    <TableCell><strong>Permite textos</strong></TableCell>
                     <TableCell><strong>Acciones</strong></TableCell>
                 </TableRow>
                 </TableHead>
                 <TableBody>
                     {contents && contents?.length && contents?.map((content, index) => (
                         <TableRow key={index}>
-                        <TableCell>{content.title ?? 'No existe el titulo'}</TableCell>
-                        <TableCell>{content.category?.name ?? 'No hay categoria' }</TableCell>
-                        <TableCell>{content.user?.alias ?? content.user ?? null}</TableCell>
-                        <TableCell>{content.type}</TableCell>
-                        <TableCell><a href={content.url} target="_blank" rel="noopener noreferrer">{content.url ?? null}</a></TableCell>
-                        <TableCell> 
+                        <TableCell>{content?.name}</TableCell>
+                        <TableCell>{handlePermissions(content.permissions.images)}</TableCell>
+                        <TableCell>{handlePermissions(content.permissions.videos)}</TableCell>
+                        <TableCell>{handlePermissions(content.permissions.texts)}</TableCell>
+                        <TableCell>
                             {
                                 userRole === 'admin' && <Button variant="contained" color="secondary" onClick={() => handleDelete(content._id)}>
                                     Eliminar
