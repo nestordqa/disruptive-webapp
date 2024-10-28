@@ -1,71 +1,56 @@
-# Getting Started with Create React App
+## 🌟 Disruptive Technical Test Web App
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+¡Bienvenidos a mi prueba técnica! Esta aplicación, desarrollada con **React** y **Zustand**, permite la gestión contenido y categorias con diferentes roles y permisos.
 
-## Available Scripts
+---
 
-In the project directory, you can run:
+### 🚀 Características
 
-### `npm start`
+- **Autenticación**: Inicia sesión utilizando las siguientes credenciales:
+  - **Email**: `admin@admin.com`
+  - **Contraseña**: `Admin123456`
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+- **Roles de Usuario**:
+  - **📖 Lector**: Puede ver la información.
+  - **✍️ Creador**: Puede ver y crear contenido, **pero debe tener al menos una categoría creada** para poder crear contenido.
+  - **👑 Admin**: Puede ver, crear y eliminar contenido.
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+---
 
-### `npm test`
+### 🛠️ Componentes
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+- **🔑 Login**: En la página de inicio de sesión, encontrarás un componente para realizar el logueo y otro para la creación de usuarios con los roles de lector y creador.
 
-### `npm run build`
+- **🌐 Navegación**: 
+  - En la parte superior de la aplicación, hay un botón **"Cerrar sesión"** que permite finalizar la sesión actual.
+  - La **navbar** incluye un buscador que permite buscar por nombre o título, dependiendo de si estás en el panel de categorías o en el contenido.
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+---
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+### 📦 Instalación
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+Para instalar y ejecutar la aplicación, sigue estos pasos:
 
-### `npm run eject`
+1. **Clona el repositorio**:
+   ```bash
+   git clone https://github.com/nestordqa/disruptive-webapp.git
+   ```
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+2. **Navega al directorio del proyecto**:
+   ```bash
+   cd disruptive-webapp
+   ```
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+3. **Instala las dependencias**:
+   ```bash
+   npm install
+   ```
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+4. **Inicia la aplicación**:
+   ```bash
+   npm run start
+   ```
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+---
 
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
-# disruptive-webapp
+¡Gracias por usar la **Disruptive Technical Test Web App**! Si tienes alguna pregunta o sugerencia, no dudes en abrir un issue en el repositorio.🌟
